@@ -1,0 +1,41 @@
+@import "styles/common";
+
+.textField {
+  label {
+    display: block;
+    margin: 0 0 7px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 19px;
+    color: $text-black;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 20px;
+    color: $text-black;
+    border: 1px solid $gray;
+    border-radius: 4px;
+  }
+
+   p {
+    margin: 7px 0 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 14px;
+    color: $text-error;
+  }
+
+  &.error {
+    input, label {
+      color: $text-error;
+    }
+  }
+}
