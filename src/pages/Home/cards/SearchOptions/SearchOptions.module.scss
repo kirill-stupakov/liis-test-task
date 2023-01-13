@@ -1,0 +1,10 @@
+@import 'styles/common';
+
+.searchOptions {
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0 0 32px;
+  }
+}
