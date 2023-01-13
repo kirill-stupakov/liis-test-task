@@ -7,12 +7,12 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "gc": "node ./createComponent.js",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.json"
   },
   "dependencies": {
-    "@types/validator": "^13.7.10",
     "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -24,6 +24,7 @@
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
+    "@types/validator": "^13.7.10",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
     "@vitejs/plugin-react-swc": "^3.0.0",
@@ -38,6 +39,7 @@
     "sass": "^1.57.1",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
+    "vite-plugin-svgr": "^2.4.0",
     "vite-tsconfig-paths": "^4.0.3"
   }
 }

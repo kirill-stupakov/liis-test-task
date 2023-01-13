@@ -1,0 +1,20 @@
+@import 'styles/common';
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  li {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 38px;
+    color: $text-black;
+  }
+
+  svg {
+    margin: 0 20px 0 0;
+    color: #A7A7A7;
+  }
+}

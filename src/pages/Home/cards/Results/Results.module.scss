@@ -1,0 +1,44 @@
+@import 'styles/common';
+
+.results {
+  max-width: 664px;
+  flex-grow: 1;
+  min-width: 0;
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 28px;
+
+    time {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 28px;
+      color: $primary;
+    }
+  }
+
+  .favoritesCount {
+    margin: 0 0 12px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: -0.408px;
+    color: $text-black;
+
+    span {
+      font-weight: 500;
+      color: $primary;
+    }
+  }
+
+  .hotels {
+    padding: 8px 14px 0 0;
+    overflow-y: auto;
+    @include custom-scrollbar;
+  }
+}
