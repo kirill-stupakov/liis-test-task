@@ -1,42 +1,45 @@
+import cn from 'classnames';
 import HotelCard from 'components/HotelCard';
-import hotels from 'hotels';
-import { useSearchParams } from 'react-router-dom';
+import useAppSelector from 'hooks/useAppSelector';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Card from 'components/Card';
 import Carousel from 'components/Carousel';
 import formatDate from 'utils/formatDate';
 import styles from './Results.module.scss';
 
-const favoritesCount = 3;
-
 const Results = () => {
-  const [searchParams] = useSearchParams();
-  const days = Number(searchParams.get('days')) || 1;
-  const date = searchParams.get('date') || '';
-  const displayDate = formatDate(date);
-  const location = searchParams.get('location') || '';
+  const {
+    filters: { location, checkIn, checkOut },
+    hotels: { data: hotels, isLoading },
+    favorites: { data: favorites },
+  } = useAppSelector((state) => state);
+  const displayDate = formatDate(checkIn);
 
   return (
     <Card className={styles.results}>
       <div className={styles.top}>
         <Breadcrumbs items={['Отели', location]} />
-        <time dateTime={date}>{displayDate}</time>
+        <time dateTime={checkIn}>{displayDate}</time>
       </div>
       <Carousel />
       <p className={styles.favoritesCount}>
-        Добавленно в Избранное: <span>{favoritesCount}</span> отеля
+        Добавленно в Избранное: <span>{favorites.length}</span> отеля
       </p>
-      <ul className={styles.hotels}>
-        {hotels.map((hotel) => (
-          <HotelCard
-            className={styles.hotelCard}
-            key={hotel.hotelId}
-            hotel={hotel}
-            hasIcon
-            date={date}
-            days={days}
-          />
-        ))}
+      <ul className={cn(styles.hotels, isLoading && styles.loading)}>
+        {hotels?.length || isLoading ? (
+          hotels?.map((hotel) => (
+            <HotelCard
+              className={styles.hotelCard}
+              key={hotel.hotelId}
+              hotel={hotel}
+              hasIcon
+              checkIn={checkIn}
+              checkOut={checkOut}
+            />
+          ))
+        ) : (
+          <p className={styles.nothingFound}>Ничего не найдено</p>
+        )}
       </ul>
     </Card>
   );

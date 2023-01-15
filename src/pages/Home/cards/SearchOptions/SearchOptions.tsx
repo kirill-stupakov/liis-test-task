@@ -1,36 +1,52 @@
+import useAppDispatch from 'hooks/useAppDispatch';
+import useAppSelector from 'hooks/useAppSelector';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import TextField from 'components/TextField';
+import { setFilters } from 'redux/actions/filters';
+import { fetchHotels } from 'redux/actions/hotels';
+import addDays from 'utils/addDays';
+import getDaysDiff from 'utils/getDaysDiff';
 import styles from './SearchOptions.module.scss';
 
 type Inputs = {
   location: string;
-  date: string;
+  checkIn: string;
   days: number;
 };
 
-const defaultValues: Inputs = {
-  location: 'Москва',
-  date: new Date().toLocaleDateString('en-CA'),
-  days: 1,
-};
-
 const SearchOptions = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
+  const {
+    hotels: { isLoading },
+    filters: { location, checkIn, checkOut },
+  } = useAppSelector((state) => state);
+  const [, setSearchParams] = useSearchParams();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
-    defaultValues: { ...defaultValues, ...Object.fromEntries(searchParams) },
+    defaultValues: {
+      location,
+      checkIn,
+      days: getDaysDiff(checkIn, checkOut),
+    },
   });
 
   const onSubmit = handleSubmit((values) => {
-    // @ts-ignore
-    setSearchParams(new URLSearchParams(values));
+    const newFilters = {
+      location: values.location,
+      checkIn: values.checkIn,
+      checkOut: addDays(values.checkIn, values.days),
+    };
+
+    dispatch(setFilters(newFilters));
+    setSearchParams(newFilters);
+    dispatch(fetchHotels());
   });
 
   return (
@@ -49,10 +65,10 @@ const SearchOptions = () => {
             label='Дата заселения'
             boldLabel
             type='date'
-            {...register('date', {
+            {...register('checkIn', {
               required: 'Обязательное поле',
             })}
-            error={errors.date?.message}
+            error={errors.checkIn?.message}
           />
           <TextField
             label='Количество дней'
@@ -64,7 +80,9 @@ const SearchOptions = () => {
             error={errors.days?.message}
           />
         </div>
-        <Button type='submit'>Найти</Button>
+        <Button type='submit' disabled={isLoading}>
+          Найти
+        </Button>
       </form>
     </Card>
   );
