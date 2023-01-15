@@ -28,4 +28,8 @@ $gradient: linear-gradient(104.34deg, $primary -15.34%, $secondary 145.95%);
   &:active {
     background: linear-gradient(rgba($black, 0.2), rgba($black, 0.2)), $gradient;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }

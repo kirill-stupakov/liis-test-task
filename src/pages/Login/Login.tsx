@@ -1,29 +1,51 @@
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import TextField from 'components/TextField';
-import { useForm } from 'react-hook-form';
+import useAppDispatch from 'hooks/useAppDispatch';
+import useAppSelector from 'hooks/useAppSelector';
+import { homePath } from 'pages/Home';
+import { logIn } from 'redux/actions/user';
 import isEmail from 'validator/lib/isEmail';
 import styles from './Login.module.scss';
 
-type Inputs = {
+export type LoginFormInputs = {
   login: string;
   password: string;
 };
 
-const defaultValues: Inputs = {
+const defaultValues: LoginFormInputs = {
   login: '',
   password: '',
 };
 
+export const loginPath = '/login';
+
 const Login = () => {
+  const dispatch = useAppDispatch();
+  const { data: user, isLoading, error } = useAppSelector((state) => state.user);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({ defaultValues });
+    setError,
+  } = useForm<LoginFormInputs>({ defaultValues });
+
+  useEffect(() => {
+    if (error) {
+      setError('login', { type: 'custom', message: error });
+      setError('password', { type: 'custom', message: error });
+    }
+  }, [error]);
+
+  if (user) {
+    return <Navigate to={homePath} />;
+  }
 
   const onSubmit = handleSubmit((values) => {
-    console.log('submit', values);
+    dispatch(logIn(values));
   });
 
   return (
@@ -57,7 +79,9 @@ const Login = () => {
               error={errors.password?.message}
             />
           </div>
-          <Button type='submit'>Войти</Button>
+          <Button type='submit' disabled={isLoading}>
+            Войти
+          </Button>
         </form>
       </Card>
     </div>
