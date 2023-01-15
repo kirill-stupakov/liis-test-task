@@ -1,14 +1,14 @@
-import Home from 'pages/Home';
 import { RouteObject } from 'react-router-dom';
-import Login from 'pages/Login';
+import Home, { homePath } from 'pages/Home';
+import Login, { loginPath } from 'pages/Login';
 
 const routes: RouteObject[] = [
   {
-    path: '/',
+    path: homePath,
     element: <Home />,
   },
   {
-    path: '/login',
+    path: loginPath,
     element: <Login />,
   },
 ];

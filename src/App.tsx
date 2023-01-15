@@ -1,16 +1,19 @@
+import { useLayoutEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from 'redux/store';
+import useAppDispatch from 'hooks/useAppDispatch';
+import { initializeUser } from 'redux/actions/user';
 import routes from './routes';
 
 const router = createBrowserRouter(routes);
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  );
+  const dispatch = useAppDispatch();
+
+  useLayoutEffect(() => {
+    dispatch(initializeUser());
+  }, []);
+
+  return <RouterProvider router={router} />;
 };
 
 export default App;

@@ -8,16 +8,6 @@ export const filtersState: Filters = {
   checkOut: new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
 };
 
-const initializeFilters = () => {
-  const params = new URLSearchParams(window.location.search);
-  const queryFilters = Object.fromEntries(params);
-  if (Object.keys(filtersState).every((key) => key in queryFilters)) {
-    return queryFilters as Filters;
-  }
-
-  return filtersState;
-};
-
-export default createReducer(initializeFilters(), (builder) => {
+export default createReducer(filtersState, (builder) => {
   builder.addCase(setFilters, (draft, { payload }) => payload);
 });

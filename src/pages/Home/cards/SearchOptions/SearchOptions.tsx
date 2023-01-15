@@ -1,5 +1,6 @@
 import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import Button from 'components/Button';
@@ -29,13 +30,16 @@ const SearchOptions = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: {
+    reset,
+  } = useForm<Inputs>();
+
+  useEffect(() => {
+    reset({
       location,
       checkIn,
       days: getDaysDiff(checkIn, checkOut),
-    },
-  });
+    });
+  }, [location, checkIn, checkOut]);
 
   const onSubmit = handleSubmit((values) => {
     const newFilters = {
