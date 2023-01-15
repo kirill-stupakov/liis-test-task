@@ -1,9 +1,8 @@
 @import 'styles/common';
 
 .results {
+  flex-shrink: 0;
   max-width: 664px;
-  flex-grow: 1;
-  min-width: 0;
 
   .top {
     display: flex;
@@ -40,5 +39,20 @@
     padding: 8px 14px 0 0;
     overflow-y: auto;
     @include custom-scrollbar;
+
+    &.loading {
+      opacity: 25%;
+    }
+
+    .nothingFound {
+      margin: 15px 0 0;
+      text-align: center;
+      font-family: "Roboto", sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: -0.408px;
+      color: #878787;
+    }
   }
 }

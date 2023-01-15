@@ -1,24 +1,38 @@
+import { isEqual } from 'lodash';
 import { FC } from 'react';
 import cn from 'classnames';
+import useAppDispatch from 'hooks/useAppDispatch';
+import useAppSelector from 'hooks/useAppSelector';
+import { addFavorite, removeFavorite } from 'redux/actions/favorites';
 import { Hotel } from 'types/hotel';
 import { ReactComponent as HouseIcon } from 'assets/icons/house.svg';
 import { ReactComponent as StarIcon } from 'assets/icons/star.svg';
 import { ReactComponent as HeartIcon } from 'assets/icons/heart.svg';
 import formatDate from 'utils/formatDate';
 import formatPrice from 'utils/formatPrice';
+import getDaysDiff from 'utils/getDaysDiff';
 import styles from './HotelCard.module.scss';
 
 interface Props {
   hasIcon?: boolean;
   className?: string;
   hotel: Hotel;
-  date: string;
-  days: number;
-  isFavorite?: boolean;
+  checkIn: string;
+  checkOut: string;
 }
 
-const HotelCard: FC<Props> = ({ hasIcon, hotel, className, date, days, isFavorite }) => {
-  const displayDate = formatDate(date);
+const HotelCard: FC<Props> = ({ hasIcon, hotel, className, checkIn, checkOut }) => {
+  const { data: favorites } = useAppSelector((state) => state.favorites);
+  const dispatch = useAppDispatch();
+
+  const displayDate = formatDate(checkIn);
+  const days = getDaysDiff(checkIn, checkOut);
+  const favorite = favorites.find((favorite) => isEqual(favorite, { hotel, checkIn, checkOut }));
+
+  const onChange = () => {
+    const newFavorite = { hotel, checkIn, checkOut };
+    dispatch(favorite ? removeFavorite(favorite) : addFavorite(newFavorite));
+  };
 
   return (
     <li className={cn(className, styles.hotelCard)}>
@@ -33,14 +47,15 @@ const HotelCard: FC<Props> = ({ hasIcon, hotel, className, date, days, isFavorit
           <label className={styles.heart}>
             <input
               type='checkbox'
-              checked={isFavorite}
-              aria-label={isFavorite ? 'Убюрать из избранного' : 'Добавить в избранное'}
+              checked={Boolean(favorite)}
+              onChange={onChange}
+              aria-label={favorite ? 'Убюрать из избранного' : 'Добавить в избранное'}
             />
             <HeartIcon />
           </label>
         </div>
         <div className={styles.period}>
-          <time dateTime={date}>{displayDate}</time>
+          <time dateTime={checkIn}>{displayDate}</time>
           <span className={styles.separator}>--</span>
           <span>{days} день</span>
         </div>

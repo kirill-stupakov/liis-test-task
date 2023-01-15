@@ -27,7 +27,6 @@
     .top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       width: 100%;
 
       h2 {
@@ -40,6 +39,8 @@
       }
 
       .heart {
+        display: block;
+        height: fit-content;
         cursor: pointer;
 
         svg {
@@ -57,6 +58,7 @@
 
         input {
           appearance: none;
+          margin: 0;
         }
       }
     }
