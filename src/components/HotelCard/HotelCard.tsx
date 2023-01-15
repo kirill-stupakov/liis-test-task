@@ -11,6 +11,7 @@ import { ReactComponent as HeartIcon } from 'assets/icons/heart.svg';
 import formatDate from 'utils/formatDate';
 import formatPrice from 'utils/formatPrice';
 import getDaysDiff from 'utils/getDaysDiff';
+import getNounForm from 'utils/getNounForm';
 import styles from './HotelCard.module.scss';
 
 interface Props {
@@ -57,7 +58,9 @@ const HotelCard: FC<Props> = ({ hasIcon, hotel, className, checkIn, checkOut }) 
         <div className={styles.period}>
           <time dateTime={checkIn}>{displayDate}</time>
           <span className={styles.separator}>--</span>
-          <span>{days} день</span>
+          <span>
+            {days} {getNounForm(days, { one: 'день', two: 'дня', five: 'дней' })}
+          </span>
         </div>
         <div className={styles.bottom}>
           <div className={styles.rating} title={`${hotel.stars} из 5 звезд`}>
