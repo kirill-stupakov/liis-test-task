@@ -5,6 +5,7 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import Card from 'components/Card';
 import Carousel from 'components/Carousel';
 import formatDate from 'utils/formatDate';
+import getNounForm from 'utils/getNounForm';
 import styles from './Results.module.scss';
 
 const Results = () => {
@@ -23,7 +24,12 @@ const Results = () => {
       </div>
       <Carousel />
       <p className={styles.favoritesCount}>
-        Добавленно в Избранное: <span>{favorites.length}</span> отеля
+        Добавленно в Избранное: <span>{favorites.length}</span>{' '}
+        {getNounForm(favorites.length, {
+          one: 'отель',
+          two: 'отеля',
+          five: 'отелей',
+        })}
       </p>
       <ul className={cn(styles.hotels, isLoading && styles.loading)}>
         {hotels?.length || isLoading ? (
