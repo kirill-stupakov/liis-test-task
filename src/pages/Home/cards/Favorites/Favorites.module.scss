@@ -20,6 +20,7 @@
   }
 
   .list {
+    padding: 0 14px 0 0;
     overflow-y: auto;
     @include custom-scrollbar;
 

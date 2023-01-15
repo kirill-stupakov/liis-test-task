@@ -32,8 +32,8 @@
       display: block;
       appearance: none;
       transform: rotate(45deg);
-      width: 5px;
-      height: 5px;
+      width: 6px;
+      height: 6px;
       border-color: #ADADAD;
       border-width: 2px 0 0 2px;
       border-style: solid;
@@ -41,7 +41,7 @@
 
       &:last-of-type {
         transform: rotate(-135deg);
-        margin: -3px 0 0;
+        margin: -2px 0 0;
       }
     }
   }
