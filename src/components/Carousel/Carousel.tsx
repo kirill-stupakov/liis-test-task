@@ -1,15 +1,12 @@
+import cn from 'classnames';
+import useAppSelector from 'hooks/useAppSelector';
 import { FC, useRef, WheelEventHandler } from 'react';
-import image1 from 'assets/images/mock-1.jpg';
-import image2 from 'assets/images/mock-2.jpg';
-import image3 from 'assets/images/mock-3.jpg';
-import image4 from 'assets/images/mock-4.jpg';
 import styles from './Carousel.module.scss';
-
-const images = [image1, image2, image3, image4, image1, image2, image3, image4];
 
 interface Props {}
 
 const Carousel: FC<Props> = () => {
+  const { data, isLoading } = useAppSelector((state) => state.pictures);
   const containerRef = useRef<HTMLUListElement>(null);
 
   const onWheel: WheelEventHandler<HTMLUListElement> = (event) => {
@@ -22,10 +19,14 @@ const Carousel: FC<Props> = () => {
   };
 
   return (
-    <ul ref={containerRef} className={styles.carousel} aria-hidden onWheel={onWheel}>
-      {images.map((image, index) => (
+    <ul
+      ref={containerRef}
+      className={cn(styles.carousel, isLoading && styles.loading)}
+      onWheel={onWheel}
+    >
+      {data?.map((image, index) => (
         <li key={index}>
-          <img src={image} alt='' />
+          <img src={image.src} alt={image.alt} />
         </li>
       ))}
     </ul>

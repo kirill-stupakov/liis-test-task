@@ -8,6 +8,7 @@ import Card from 'components/Card';
 import TextField from 'components/TextField';
 import { setFilters } from 'redux/actions/filters';
 import { fetchHotels } from 'redux/actions/hotels';
+import { fetchPictures } from 'redux/actions/pictures';
 import addDays from 'utils/addDays';
 import getDaysDiff from 'utils/getDaysDiff';
 import styles from './SearchOptions.module.scss';
@@ -48,9 +49,10 @@ const SearchOptions = () => {
       checkOut: addDays(values.checkIn, values.days),
     };
 
-    dispatch(setFilters(newFilters));
     setSearchParams(newFilters);
+    dispatch(setFilters(newFilters));
     dispatch(fetchHotels());
+    dispatch(fetchPictures());
   });
 
   return (
