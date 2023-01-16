@@ -8,6 +8,7 @@ import Favorites from 'pages/Home/cards/Favorites';
 import Results from 'pages/Home/cards/Results';
 import { initializeFilters } from 'redux/actions/filters';
 import { fetchHotels } from 'redux/actions/hotels';
+import { fetchPictures } from 'redux/actions/pictures';
 import SearchOptions from './cards/SearchOptions';
 import styles from './Home.module.scss';
 
@@ -20,6 +21,7 @@ const Home = () => {
   useLayoutEffect(() => {
     dispatch(initializeFilters());
     dispatch(fetchHotels());
+    dispatch(fetchPictures());
   }, []);
 
   if (!user && !isLoading) {
